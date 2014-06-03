@@ -48,7 +48,7 @@ def find_pos(lang, project_apps=True, django_apps=False, third_party_apps=False)
     parts = settings.SETTINGS_MODULE.split('.')
     project = __import__(parts[0], {}, {}, [])
     abs_project_path = os.path.normpath(os.path.abspath(os.path.dirname(project.__file__)))
-    if project_apps:
+    if project_apps and not (rosetta_settings.EXCLUDED_APPLICATIONS and '.' in rosetta_settings.EXCLUDED_APPLICATIONS):
         if os.path.exists(os.path.abspath(os.path.join(os.path.dirname(project.__file__), 'locale'))):
             paths.append(os.path.abspath(os.path.join(os.path.dirname(project.__file__), 'locale')))
         if os.path.exists(os.path.abspath(os.path.join(os.path.dirname(project.__file__), '..', 'locale'))):
